@@ -27,9 +27,8 @@ f.close()
 ### COLLECTING TARGET POSTS ###
 target_id = []
 url_express = '(https://i.)(imgur.com/|redd.it/)'
-express = '(([Bb]lack|[Ww]hite) to )'
-express2 = '([Ww]hite to )'
-express3 = '([Bb]lack to )'
+title_express = '(([Bb]lack|[Ww]hite) to )'
+white_express = '([Ww]hite to )'
 turn = ''
 winner = ''
 
@@ -37,11 +36,11 @@ while True:
     for submission in reddit_instance.subreddit('chess').new(limit=300):
         
         if submission.id not in commented       and \
-        re.search(express, submission.title)    and \
+        re.search(title_express, submission.title)    and \
         submission.selftext==""                 and \
         re.match(url_express, submission.url):
             
-            if re.search(express2, submission.title):
+            if re.search(white_express, submission.title):
                 turn = 'white'
             else:
                 turn = 'black'
