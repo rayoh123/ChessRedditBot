@@ -12,7 +12,7 @@ def grab_fen(url: str, turn: str) -> str:
     
     complete_string = "cd C:\\YOUR FILE PATH HERE\\Chess Bot\\tensorflow_chessbot-chessfenbot && tensorflow_chessbot.py --url %s" % (url)
     r = str(subprocess.check_output(complete_string, shell=True, timeout=5))
-    if float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]) < 60.0:
+    if float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]) < 70.0:
         print("The image linked below isn't clear to me", float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]))
         raise AssertionError
     begin_idx = r.index('Predicted FEN: ')
