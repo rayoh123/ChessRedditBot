@@ -30,8 +30,7 @@ url_express = '(https://i.)(imgur.com/|redd.it/)'
 title_express = '(([Bb]lack|[Ww]hite) to )'
 white_express = '([Ww]hite to )'
 turn = ''
-winner = ''
-
+  
 while True:
     for submission in reddit_instance.subreddit('chess').new(limit=300):
         
