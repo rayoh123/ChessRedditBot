@@ -137,7 +137,7 @@ def grab_line(fen: str, turn: str) -> str or float:
     '''
     # The engine used is Stockfish 10
     engine = chess.engine.SimpleEngine.popen_uci("stockfish_10_x64.exe")
-    score = ''
+    player = ''
     line = ''
 
 
@@ -156,17 +156,17 @@ def grab_line(fen: str, turn: str) -> str or float:
         advantage = int(str(info.get('score').white())[1:])/100
         if str(info.get('score').white())[0] == '+':
             # If White has the advantage in the FEN...
-            score = 'White'
+            player = 'White'
         elif str(info.get('score').white())[0] == '-':
             # If Black has the advantage in the FEN...
-            score = 'Black'
+            player = 'Black'
         elif str(info.get('score').white())[0] == '#' and str(info.get('score').white())[1] == '+':
             # If White has a checkmating advantage in the FEN...
-            score = 'White'
+            player = 'White'
             advantage = 'checkmate in %d' % (abs(int(advantage*100)))
         elif str(info.get('score').white())[0] == '#' and str(info.get('score').white())[1] == '-':
             # If Black has a checkmating advantage in the FEN...
-            score = 'Black'
+            player = 'Black'
             advantage = 'checkmate in %d' % (abs(int(advantage*100)))
 
     engine.quit()
@@ -181,5 +181,5 @@ def grab_line(fen: str, turn: str) -> str or float:
     for move in line[:3]:
         final_line += f"\n\n>!{move}!<"
         
-    return score, advantage, comment
+    return player, advantage, comment
 
