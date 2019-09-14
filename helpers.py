@@ -179,7 +179,7 @@ def grab_line(fen: str, turn: str) -> str or float:
     # new lines.
     comment = ''
     for move in line[:3]:
-        final_line += f"\n\n>!{move}!<"
+        comment += f"\n\n>!{move}!<"
         
     return player, advantage, comment
 
