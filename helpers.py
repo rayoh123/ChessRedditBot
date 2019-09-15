@@ -29,7 +29,7 @@ def is_flipped(fen: str, turn: str) -> bool:
     # Find the fourth instance of / in the FEN, as that denotes
     # the horizontal middle line of the chess board dividing
     # the upper four rows and the bottom four rows.
-    middle_idx = [i for i, n in enumerate(fen) if n == '/'][4]
+    middle_idx = [i for i, n in enumerate(fen) if n == '/'][3]
     first_upper = 0
     second_upper = 0
 
@@ -46,7 +46,6 @@ def is_flipped(fen: str, turn: str) -> bool:
 
 
     if first_upper<second_upper:
-        
         # If there are more White pieces in the bottom four rows and
         # it is White's turn, return False (the board is not flipped
         # and White is indeed at the bottom).
@@ -59,7 +58,6 @@ def is_flipped(fen: str, turn: str) -> bool:
         else:
             return True
     elif first_upper>second_upper:
-        
         # If there are more White pieces in the top four rows and
         # it is White's turn, return True (the board is flipped 
         # and White is not at the bottom).
