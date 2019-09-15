@@ -141,7 +141,7 @@ def grab_line(fen: str, turn: str) -> str or float:
 
     # Stockfish analyzes the FEN at a depth of 20 nodes and stores the
     # analysis in an object named 'analysis'
-    with engine.analysis(chess.Board(fen), chess.engine.Limit(depth=20)) as analysis:
+    with engine.analysis(chess.Board(fen), chess.engine.Limit(depth=24)) as analysis:
 
 
         # Retrieving the best continuation line of moves from 'analysis'.
