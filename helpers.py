@@ -85,7 +85,7 @@ def grab_fen(url: str, turn: str) -> str:
     '''
     # The below string is a command that is entered into command prompt
     # and the output is recorded in the variable 'r'. 
-    complete_string = "cd C:\\Users\\Raymond\\Desktop\\Chess Bot\\tensorflow_chessbot-chessfenbot && tensorflow_chessbot.py --url %s" % (url)
+    complete_string = "cd C:\\CHANGE THIS TO YOUR OWN FILE PATH\\Chess Bot\\tensorflow_chessbot-chessfenbot && tensorflow_chessbot.py --url %s" % (url)
     r = str(subprocess.check_output(complete_string, shell=True, timeout=5))
 
 
