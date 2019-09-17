@@ -10,10 +10,12 @@ To create your own ChessRedditBot:
     
 3). Download all the files from the chessfenbot branch of tensorflow_chessbot, located here: https://github.com/Elucidation/tensorflow_chessbot/tree/chessfenbot and put the 
     downloaded folder containing the files in the same directory as the other files.
-    
-4). Create an app on your Reddit account and put the information in "details.py".
 
-5). Change the filepath in to the "grabfen" function in " helpers.py" to the filepath to the 
+4). Download Tensorflow and SciPy using pip3.
+    
+5). Create an app on your Reddit account and put the information in "details.py".
+
+6). Change the filepath in to the "grabfen" function in " helpers.py" to the filepath to the 
     chessfenbot folder as it appears on your computer.
     
-6). Run "script.py".
+7). Run "script.py".
