@@ -27,8 +27,8 @@ f.close()
 ### BODY OF THE PROGRAM ###
 target_id = []
 url_express = '(https://i.)(imgur.com/|redd.it/)'
-title_express = '(([Bb]lack|[Ww]hite) to )'
-white_express = '([Ww]hite to )'
+title_express = '(([Bb]lack|[Ww]hite) [Tt]o )'
+white_express = '([Ww]hite [Tt]o )'
 turn = ''
 
 while True:
