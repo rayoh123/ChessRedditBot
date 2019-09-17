@@ -32,7 +32,7 @@ white_express = '([Ww]hite to )'
 turn = ''
 
 while True:
-    for submission in reddit_instance.subreddit('chess').hot(limit=300):
+    for submission in reddit_instance.subreddit('chess').new(limit=300):
         # 1). Checks if the submission has not already been commented on by
         # the program.
         # 2). Checks the submission's title to see if the post is a
