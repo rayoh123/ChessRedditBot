@@ -19,3 +19,5 @@ To create your own ChessRedditBot:
     chessfenbot folder as it appears on your computer.
     
 7). Run "script.py".
+
+NOTE: This program may not run on versions of python above 3.7.1
