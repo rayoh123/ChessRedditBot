@@ -29,50 +29,31 @@ def is_flipped(fen: str, turn: str) -> bool:
     # Find the fourth instance of / in the FEN, as that denotes
     # the horizontal middle line of the chess board dividing
     # the upper four rows and the bottom four rows.
+    #
+    # Then, find whether the White king is in the lower four
+    # rows of the board, or in other words, whether White is
+    # at the bottom of the board.
     middle_idx = [i for i, n in enumerate(fen) if n == '/'][3]
-    first_upper = 0
-    second_upper = 0
+    white_king_in_lower = False
+    if "K" in fen[middle_idx:]:
+        white_king_in_lower = True
 
 
-    # Now, find how many White pieces (uppercase letters) there
-    # are in the top four rows, and how many White pieces there
-    # are in the bottom four rows.
-    for i in range(middle_idx):
-        if fen[i].isupper():
-            first_upper += 1
-    for i in range(middle_idx, len(fen)):
-        if fen[i].isupper():
-            second_upper += 1
-
-
-    if first_upper<second_upper:
-        # If there are more White pieces in the bottom four rows and
-        # it is White's turn, return False (the board is not flipped
-        # and White is indeed at the bottom).
-        #
-        # If there are more White pieces in the bottom four rows and
-        # it is Black's turn, return True (the board is flipped 
-        # and Black is not at the bottom).
-        if turn == 'white':
+    # Now, find out if the player whose turn it is is in the bottom
+    # four rows of the chess position represented by the FEN.
+    if turn == 'white':
+        # If it's White's turn and his king is at the bottom
+        # of the board, that means the board is not flipped.
+        # Otherwise, the board is flipped.
+        if white_king_in_lower:
             return False
-        else:
-            return True
-    elif first_upper>second_upper:
-        # If there are more White pieces in the top four rows and
-        # it is White's turn, return True (the board is flipped 
-        # and White is not at the bottom).
-        #
-        # If there are more White pieces in the top four rows and
-        # it is Black's turn, return False (the board is flipped 
-        # and Black is indeed at the bottom).
-        if turn == 'white':
-            return True
-        else:
-            return False
+        return True
     else:
-        # If there are an equal number of White pieces in the top and
-        # bottom four rows of the board, return False (we will assume
-        # that the board is not flipped). 
+        # If it's Black's turn and the White king is at the
+        # bottom of the board, that means the board is
+        # flipped. Otherwise, the board is not flipped.
+        if white_king_in_lower:
+            return True
         return False
 
 
