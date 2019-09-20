@@ -44,19 +44,21 @@ while True:
         re.search(title_express, submission.title) and \
         submission.selftext==""                    and \
         re.match(url_express, submission.url):
-            
             # Identifies from the title whose turn it is supposed to be.
             if re.search(white_express, submission.title):
                 turn = 'white'
             else:
                 turn = 'black'
 
-            # This try clause catches two possible exceptions:
-            # 1). If the computer cannot read a FEN at all from
-            # the chess position.
-            # 2). If the FEN the computer produces is of an illegal
-            # position.
             try:
+                # This try clause catches two possible exceptions:
+                # 1). If the computer cannot read a FEN at all from
+                # the chess position.
+                # 2). If the FEN the computer produces is of an illegal
+                # position.
+                #
+                # The user will be notified by the grab_fen function if
+                # there is no chessboard detected. 
                 fen = helpers.grab_fen(submission.url, turn)
                 player, advantage, comment = helpers.grab_line(fen, turn)
             except:
@@ -67,6 +69,7 @@ while True:
                 with open('commented.txt', 'a') as f:
                     f.write(submission.id + '\n')
                 continue
+                
 
             # Commenting below the Reddit submission.
             if type(advantage) == float:
