@@ -66,8 +66,8 @@ def grab_fen(url: str, turn: str) -> str:
     '''
     # The below string is a command that is entered into command prompt
     # and the output is recorded in the variable 'r'. 
-    complete_string = "cd C:\\CHANGE THIS TO YOUR OWN FILE PATH\\ChessRedditBot-master\\tensorflow_chessbot-chessfenbot && tensorflow_chessbot.py --url %s" % (url)
-    r = str(subprocess.check_output(complete_string, shell=True, timeout=5))
+    complete_string = "cd C:\\Users\\Raymond\\Desktop\\Chess Bot\\tensorflow_chessbot-chessfenbot && tensorflow_chessbot.py --url %s" % (url)
+    r = str(subprocess.check_output(complete_string, shell=True, timeout=60))
 
 
     # The anticipated accuracy of the FEN produced is captured by the
@@ -132,7 +132,11 @@ def grab_line(fen: str, turn: str) -> str or float:
 
         # 'advantage' stores the advantage in number of pawns from
         # White's perspective.
-        advantage = int(str(info.get('score').white())[1:])/100
+        if str(info.get('score').white()) == '0':
+            advantage = 0
+        else:
+            advantage = int(str(info.get('score').white())[1:])/100
+
         if str(info.get('score').white())[0] == '+':
             # If White has the advantage in the FEN...
             player = 'White'
