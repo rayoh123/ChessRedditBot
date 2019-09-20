@@ -65,15 +65,18 @@ def grab_fen(url: str, turn: str) -> str:
     in the image the url leads to.
     '''
     # The below string is a command that is entered into command prompt
-    # and the output is recorded in the variable 'r'. 
-    complete_string = "cd C:\\Users\\Raymond\\Desktop\\Chess Bot\\tensorflow_chessbot-chessfenbot && tensorflow_chessbot.py --url %s" % (url)
-    r = str(subprocess.check_output(complete_string, shell=True, timeout=60))
-
+    # and the output is recorded in the variable 'r'.
+    try:
+        complete_string = "cd C:\\Users\\Raymond\\Desktop\\Chess Bot\\tensorflow_chessbot-chessfenbot && tensorflow_chessbot.py --url %s" % (url)
+        r = str(subprocess.check_output(complete_string, shell=True, timeout=60))
+    except:
+        print("No chessboard detected.")
+        raise AssertionError
 
     # The anticipated accuracy of the FEN produced is captured by the
     # below regular expression and is only accepted if 70% or over.
     # Otherwise, an Assertion Error is raised.
-    if float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]) < 70.0:
+    if float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]) < 65.0:
         print("The image linked below isn't clear to me", float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]))
         raise AssertionError
 
