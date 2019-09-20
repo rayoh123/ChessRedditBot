@@ -76,7 +76,7 @@ def grab_fen(url: str, turn: str) -> str:
     # The anticipated accuracy of the FEN produced is captured by the
     # below regular expression and is only accepted if 70% or over.
     # Otherwise, an Assertion Error is raised.
-    if float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]) < 65.0:
+    if float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]) < 70.0:
         print("The image linked below isn't clear to me", float(re.search('(\d{2,3})(.\d%)', r).group(0)[:-1]))
         raise AssertionError
 
