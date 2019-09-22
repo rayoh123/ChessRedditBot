@@ -70,7 +70,7 @@ def grab_fen(url: str, turn: str) -> str:
         complete_string = "cd C:\\Users\\Raymond\\Desktop\\Chess Bot\\tensorflow_chessbot-chessfenbot && tensorflow_chessbot.py --url %s" % (url)
         r = str(subprocess.check_output(complete_string, shell=True, timeout=60))
     except:
-        print("No chessboard detected.")
+        print("No chessboard detected in image below.")
         raise AssertionError
 
     # The anticipated accuracy of the FEN produced is captured by the
@@ -125,7 +125,7 @@ def grab_line(fen: str, turn: str) -> str or float:
 
     # Stockfish analyzes the FEN at a depth of 20 nodes and stores the
     # analysis in an object named 'analysis'
-    with engine.analysis(chess.Board(fen), chess.engine.Limit(depth=24)) as analysis:
+    with engine.analysis(chess.Board(fen), chess.engine.Limit(depth=30)) as analysis:
 
 
         # Retrieving the best continuation line of moves from 'analysis'.
