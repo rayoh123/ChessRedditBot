@@ -26,10 +26,12 @@ f.close()
 
 ### BODY OF THE PROGRAM ###
 target_id = []
-url_express = '(https://i.)(imgur.com/|redd.it/)'
+url_express = '(https://i.)(imgur.com/|redd.it/)(\w+)(.png|.jpg)'
 title_express = '((([Bb]lack|[Ww]hite) to )|(for ([Bb]lack|[Ww]hite))|(([Bb]lack|[Ww]hite) win))'
 white_express = '(([Ww]hite to )|(for [Ww]hite)|([Ww]hite win))'
 turn = ''
+image_url = ''
+
 
 while True:
     for submission in reddit_instance.subreddit('chess').new(limit=300):
@@ -37,18 +39,19 @@ while True:
         # the program.
         # 2). Checks the submission's title to see if the post is a
         # puzzle
-        # 3). Checks to see that the submission's body is empty to ensure
-        # it is a link-post and not a text-post.
-        # 4). Makes sure the submission's link is an image.
-        if submission.id not in commented          and \
-        re.search(title_express, submission.title) and \
-        submission.selftext==""                    and \
-        re.match(url_express, submission.url):
+        if submission.id not in commented and \
+        re.search(title_express, submission.title):            
+
             # Identifies from the title whose turn it is supposed to be.
-            if re.search(white_express, submission.title):
-                turn = 'white'
-            else:
-                turn = 'black'
+            if re.search(white_express, submission.title): turn = 'white'
+            else                                         : turn = 'black'
+
+            # Pulls the chessboard image's url either from the submission's url
+            # or the submission's body of text using a regular expression.
+            
+            if re.match(url_express, submission.url)        : image_url = submission.url 
+            elif re.search(url_express, submission.selftext): image_url = re.search(url_express, submission.selftext).group(0)
+                
 
             try:
                 # This try clause catches two possible exceptions:
@@ -59,13 +62,13 @@ while True:
                 #
                 # The user will be notified by the grab_fen function if
                 # there is no chessboard detected. 
-                fen = helpers.grab_fen(submission.url, turn)
+                fen = helpers.grab_fen(image_url, turn)
                 player, advantage, comment = helpers.grab_line(fen, turn)
             except:
                 # If an exception is caught, the user is notified of what the
                 # failed Reddit submission was and the submission ID is noted
                 # in the txt file so it is not processed again by the bot.
-                print("Just skipped this one: ", submission.url)
+                print("Just skipped this one: ", submission.url, '\n')
                 with open('commented.txt', 'a') as f:
                     f.write(submission.id + '\n')
                 continue
@@ -78,7 +81,7 @@ while True:
                 submission.reply(f"I'm a bot and I solved it! {player} has an advantage of >!{advantage}!<. The best continuation is: {comment}")
 
             # Notifying the user of the successful comment.
-            print("Just solved this one: ", submission.url)
+            print("Just solved this one: ", submission.url, '\n')
 
             # Noting the submission's ID so it is not processed
             # by the bot again.
