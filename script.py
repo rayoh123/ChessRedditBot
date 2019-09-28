@@ -39,16 +39,19 @@ while True:
         # the program.
         # 2). Checks the submission's title to see if the post is a
         # puzzle
-        if submission.id not in commented and \
-        re.search(title_express, submission.title):            
+        # 3). Checks for a proper url to the chess position's image
+        # for both link posts and text posts
+        if submission.id not in commented          and \
+        re.search(title_express, submission.title) and \
+        (re.match(url_express, submission.url)     or \
+        re.search(url_express, submission.selftext)):            
 
             # Identifies from the title whose turn it is supposed to be.
             if re.search(white_express, submission.title): turn = 'white'
             else                                         : turn = 'black'
 
             # Pulls the chessboard image's url either from the submission's url
-            # or the submission's body of text using a regular expression.
-            
+            # or the submission's body of text using a regular expression.            
             if re.match(url_express, submission.url)        : image_url = submission.url 
             elif re.search(url_express, submission.selftext): image_url = re.search(url_express, submission.selftext).group(0)
                 
