@@ -44,7 +44,7 @@ while True:
         # for both link posts and text posts
         if submission.id not in commented          and \
         re.search(title_express, submission.title) and \
-        (re.match(incomplete_url, submission.url)  or \
+        (re.match(incomplete_imgur_url, submission.url)  or \
         re.match(url_express, submission.url)      or \
         re.search(url_express, submission.selftext)):            
 
