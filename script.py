@@ -27,6 +27,7 @@ f.close()
 ### BODY OF THE PROGRAM ###
 target_id = []
 url_express = '(https://i.)(imgur.com/|redd.it/)(\w+)(.png|.jpg)'
+incomplete_imgur_url = '(https://imgur.com\/)(\w+)'
 title_express = '((([Bb]lack|[Ww]hite) to )|(for ([Bb]lack|[Ww]hite))|(([Bb]lack|[Ww]hite) win))'
 white_express = '(([Ww]hite to )|(for [Ww]hite)|([Ww]hite win))'
 turn = ''
@@ -43,7 +44,8 @@ while True:
         # for both link posts and text posts
         if submission.id not in commented          and \
         re.search(title_express, submission.title) and \
-        (re.match(url_express, submission.url)     or \
+        (re.match(incomplete_url, submission.url)  or \
+        re.match(url_express, submission.url)      or \
         re.search(url_express, submission.selftext)):            
 
             # Identifies from the title whose turn it is supposed to be.
@@ -51,9 +53,14 @@ while True:
             else                                         : turn = 'black'
 
             # Pulls the chessboard image's url either from the submission's url
-            # or the submission's body of text using a regular expression.            
-            if re.match(url_express, submission.url)        : image_url = submission.url 
-            elif re.search(url_express, submission.selftext): image_url = re.search(url_express, submission.selftext).group(0)
+            # or the submission's body of text using a regular expression.
+            #
+            # If the url is an imgur url that is incomplete (isn't a link
+            # to the image itself), the url is modified and a '.png' is added
+            # to the end of it to make it a direct link to the image.
+            if re.match(incomplete_imgur_url, submission.url): image_url = submission.url[:8] + 'i.' + submission.url[8:] + '.png'
+            elif re.match(url_express, submission.url)       : image_url = submission.url 
+            elif re.search(url_express, submission.selftext) : image_url = re.search(url_express, submission.selftext).group(0)
                 
 
             try:
