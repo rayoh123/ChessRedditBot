@@ -136,9 +136,9 @@ def grab_line(fen: str, turn: str) -> str or float:
         # 'advantage' stores the advantage in number of pawns from
         # White's perspective.
         if str(info.get('score').white()) == '0':
-            advantage = 0
+            score = 0
         else:
-            advantage = int(str(info.get('score').white())[1:])/100
+            score = int(str(info.get('score').white())[1:])/100
 
         if str(info.get('score').white())[0] == '+':
             # If White has the advantage in the FEN...
@@ -149,11 +149,11 @@ def grab_line(fen: str, turn: str) -> str or float:
         elif str(info.get('score').white())[0] == '#' and str(info.get('score').white())[1] == '+':
             # If White has a checkmating advantage in the FEN...
             player = 'White'
-            advantage = 'checkmate in %d' % (abs(int(advantage*100)))
+            advantage = 'checkmate in %d' % (abs(int(score*100)))
         elif str(info.get('score').white())[0] == '#' and str(info.get('score').white())[1] == '-':
             # If Black has a checkmating advantage in the FEN...
             player = 'Black'
-            advantage = 'checkmate in %d' % (abs(int(advantage*100)))
+            advantage = 'checkmate in %d' % (abs(int(score*100)))
 
     engine.quit()
     
@@ -165,7 +165,7 @@ def grab_line(fen: str, turn: str) -> str or float:
     # new lines. If there is a checkmate in 5 moves or less, the whole
     # line is posted. If not, only the first 3 moves is posted.
     comment = ''
-    if 'checkmate in' in advantage and int(advantage[13:]) <= 5:
+    if 'checkmate in' in advantage and int(score*100) <= 7:
         for move in line[:int(advantage[13:])]:
             comment += f"\n\n>!{move}!<"
     else:   
