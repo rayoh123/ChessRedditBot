@@ -162,10 +162,15 @@ def grab_line(fen: str, turn: str) -> str or float:
     
 
     # The comment to be posted is constructed, with spoiler tags and
-    # new lines.
+    # new lines. If there is a checkmate in 5 moves or less, the whole
+    # line is posted. If not, only the first 3 moves is posted.
     comment = ''
-    for move in line[:3]:
-        comment += f"\n\n>!{move}!<"
+    if 'checkmate in' in advantage and int(advantage[13:]) <= 5:
+        for move in line[:int(advantage[13:])]:
+            comment += f"\n\n>!{move}!<"
+    else:   
+        for move in line[:3]:
+            comment += f"\n\n>!{move}!<"
         
     return player, advantage, comment
 
