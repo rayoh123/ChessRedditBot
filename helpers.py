@@ -123,7 +123,7 @@ def grab_line(fen: str, turn: str) -> str or float:
     line = ''
 
 
-    # Stockfish analyzes the FEN at a depth of 20 nodes and stores the
+    # Stockfish analyzes the FEN at a depth of 30 nodes and stores the
     # analysis in an object named 'analysis'
     with engine.analysis(chess.Board(fen), chess.engine.Limit(depth=30)) as analysis:
 
@@ -133,8 +133,8 @@ def grab_line(fen: str, turn: str) -> str or float:
             line = info.get('pv')
 
 
-        # 'advantage' stores the advantage in number of pawns from
-        # White's perspective.
+        # 'score' stores the advantage in number of pawns/number 
+        # of moves until checkmate from White's perspective.
         if str(info.get('score').white()) == '0':
             score = 0
         else:
