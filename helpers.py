@@ -123,7 +123,7 @@ def grab_line(fen: str, turn: str) -> str or float:
     line = ''
 
 
-    # Stockfish analyzes the FEN at a depth of 30 nodes and stores the
+    # Stockfish analyzes the FEN at a depth of 20 nodes and stores the
     # analysis in an object named 'analysis'
     with engine.analysis(chess.Board(fen), chess.engine.Limit(depth=30)) as analysis:
 
@@ -133,12 +133,12 @@ def grab_line(fen: str, turn: str) -> str or float:
             line = info.get('pv')
 
 
-        # 'score' stores the advantage in number of pawns/number 
-        # of moves until checkmate from White's perspective.
+        # 'advantage' stores the advantage in number of pawns from
+        # White's perspective.
         if str(info.get('score').white()) == '0':
-            score = 0
+            advantage = 0
         else:
-            score = int(str(info.get('score').white())[1:])/100
+            advantage = int(str(info.get('score').white())[1:])/100
 
         if str(info.get('score').white())[0] == '+':
             # If White has the advantage in the FEN...
@@ -149,11 +149,11 @@ def grab_line(fen: str, turn: str) -> str or float:
         elif str(info.get('score').white())[0] == '#' and str(info.get('score').white())[1] == '+':
             # If White has a checkmating advantage in the FEN...
             player = 'White'
-            advantage = 'checkmate in %d' % (abs(int(score*100)))
+            advantage = 'checkmate in %d' % (abs(int(advantage*100)))
         elif str(info.get('score').white())[0] == '#' and str(info.get('score').white())[1] == '-':
             # If Black has a checkmating advantage in the FEN...
             player = 'Black'
-            advantage = 'checkmate in %d' % (abs(int(score*100)))
+            advantage = 'checkmate in %d' % (abs(int(advantage*100)))
 
     engine.quit()
     
@@ -165,7 +165,7 @@ def grab_line(fen: str, turn: str) -> str or float:
     # new lines. If there is a checkmate in 5 moves or less, the whole
     # line is posted. If not, only the first 3 moves is posted.
     comment = ''
-    if 'checkmate in' in advantage and int(score*100) <= 7:
+    if type(advantage) == str and int(advantage[13:]) <= 7:
         for move in line[:int(advantage[13:])]:
             comment += f"\n\n>!{move}!<"
     else:   
